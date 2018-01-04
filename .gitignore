@@ -1,0 +1,6 @@
+# OSX files
+.DS_Store
+
+#python
+__pycache__
+.idea/
