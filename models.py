@@ -1,17 +1,22 @@
-from db import db
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String
+from db import engine
+
+Base = declarative_base()
 
 
-class User(db.Model):
+# 用户表
+class User(Base):
 
     # Columns
 
     __tablename__ = 'users'
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
 
-    name = db.Column(db.String(64), unique=True, index=True)
+    name = Column(String(64), unique=True, index=True)
 
-    thrust = db.Column(db.Integer, default=0)
+    thrust = Column(Integer, default=0)
 
     def __init__(self, name, thrust):
         self.name = name
@@ -24,17 +29,17 @@ class User(db.Model):
         return '<User %s>' % self.name
 
 
-class Comment(db.Model):
+class Comment(Base):
 
     # Columns
 
     __tablename__ = 'comments'
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
 
-    name = db.Column(db.String(64), unique=True, index=True)
+    name = Column(String(64), unique=True, index=True)
 
-    desc = db.Column(db.String(128))
+    desc = Column(String(128))
 
     def __init__(self, name, desc):
         self.name = name
@@ -45,4 +50,6 @@ class Comment(db.Model):
 
     def __str__(self):
         return '<User %s>' % self.desc
+
+Base.metadata.create_all(engine)
 
